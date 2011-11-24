@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>zums &mdash; zums v0.1.3 documentation</title>
+    <title>amitu-zutils &mdash; zutils v0.1.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.1.3',
+        VERSION:     '0.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="zums v0.1.3 documentation" href="#" /> 
+    <link rel="top" title="zutils v0.1.0 documentation" href="#" /> 
   </head>
   <body>
     <div class="related">
@@ -31,7 +31,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="#">zums v0.1.3 documentation</a> &raquo;</li> 
+        <li><a href="#">zutils v0.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -40,83 +40,16 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="zums">
-<h1>zums<a class="headerlink" href="#zums" title="Permalink to this headline">¶</a></h1>
-<p>zums can be installed by:</p>
-<div class="highlight-python"><pre>easy_install zums</pre>
+  <div class="section" id="amitu-zutils">
+<h1>amitu-zutils<a class="headerlink" href="#amitu-zutils" title="Permalink to this headline">¶</a></h1>
+<p>amitu.zutils is a set of helper utilities to help create zmq services.</p>
+<p>amitu.zutils can be installed by:</p>
+<div class="highlight-python"><pre>easy_install amitu-zutils</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><a href="#id1"><span class="problematic" id="id2">|zums|</span></a> is developing fast, check out whats new at
-<a class="reference external" href="http://github.com/amitu/zums/blob/master/ChangeLog.rst">http://github.com/amitu/zums/blob/master/ChangeLog.rst</a></p>
-</div>
-<p>One auth to rule them all.</p>
-<p>Django has its way of handling users and sessions. Ruby has its own. Java
-servlets has their own. And so on. Not good.</p>
-<p>Good: there is a ZeroMQ service that programs written in any language can
-interact with, this service maintains users and sessions. The web framework of
-your choice passes sessionid from sessionid named cookie, gets session, gets
-logged in user etc. Nginx routes www.example.com/accounts to zums service,
-which happens to be a web server too, and nginx routes www.example.com/blog to
-wordpress based blog, and www.example.com/dashboard/ to a ruby on rails project
-and www.example.com/* to django. If a user signs in by going to
-www.example.com/accounts/login/, sessionid cookie is set, and if user then goes
-to www.example.com/blog, wordpress plugin for zums interacts with zums over
-zeromq and fetches user/session data.</p>
-<p>So I wrote this service. This is actually a collection of services and plugins.</p>
-<p>First install this service:</p>
-<div class="highlight-python"><pre>$ easy_install zums</pre>
-</div>
-<p>You will have to run the zumsd daemon too.:</p>
-<div class="highlight-python"><pre>$ zumsd --help</pre>
-</div>
-<p>And create a database for users.:</p>
-<div class="highlight-python"><pre>$ zumsd --init</pre>
-</div>
-<p>This will ask for a database engine, location, hostname, username etc and
-create the tables for you. [TODO: not done yet].</p>
-<p>The point to note is that your users are stored in this data base, and are
-accessible over a zeromq api too all languages and frameworks, not just django.</p>
-<div class="section" id="using-zums-with-django-projects">
-<h2>Using zums with Django Projects<a class="headerlink" href="#using-zums-with-django-projects" title="Permalink to this headline">¶</a></h2>
-<p>Using it is trivial in a django project, look at the settings.py file in
-zums_dj_example_project:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">SESSION_ENGINE</span> <span class="o">=</span> <span class="s">&quot;zums.django_backends.session&quot;</span>
-<span class="n">AUTHENTICATION_BACKENDS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;zums.django_backends.auth.ZUMSBackend&quot;</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>These two settings is all you need to do, and your django project is getting
-all the benefits of zums, which is, it can co exist with subprojects writter in
-other languages.</p>
-<p>Note: the auth backend creates a local copy of User in your django database, so
-foreign key to user etc still work without any changes.</p>
-<p>The only thing you need to know when using this service/backend vs normal
-django project is that not all users may not be there in your database, nor are
-they gauranteed to be in sync with actual master database.</p>
-<p>It is trivial to solve the above two by writing some zumsd extensions described
-elsewhere. [TODO: this is not done yet]</p>
-</div>
-<div class="section" id="using-zums-with-non-django-projects">
-<h2>Using zums with non Django Projects<a class="headerlink" href="#using-zums-with-non-django-projects" title="Permalink to this headline">¶</a></h2>
-<p>You will have to do a little more work, and hopefully someone will write
-session backends and auth backends for the programming language and web
-framework of your choice. If not, you can implement the simple zeromq api for
-zumsd daemon, and write your own session and auth handling code.</p>
-</div>
-<div class="section" id="zumsd-zeromq-api">
-<h2>Zumsd ZeroMQ API<a class="headerlink" href="#zumsd-zeromq-api" title="Permalink to this headline">¶</a></h2>
-<p>TBD</p>
-</div>
-<div class="section" id="zumsd-extensions">
-<h2>Zumsd Extensions<a class="headerlink" href="#zumsd-extensions" title="Permalink to this headline">¶</a></h2>
-<p>Zumsd can be extended by writing plugins. Zumsd talks to plugins, over zeromq,
-so plugins can be written in any language one wishes too.</p>
-<p>Plugins are quite simple, they just subscribe (zmq.SUB) to messages that zumsd
-sends over, they then user zumsd ZeroMQ api mentioned above to update data
-managed by zumsd or do whatever they want.</p>
-<p>For simplicty zumsd supports python plugins, they live within the zumsd
-process, and need not be managed as separate service.</p>
-<p>TBD</p>
+<p class="last">Check out whats new at
+<a class="reference external" href="http://github.com/amitu/zutils/blob/master/ChangeLog.rst">http://github.com/amitu/zutils/blob/master/ChangeLog.rst</a></p>
 </div>
 </div>
 
@@ -126,17 +59,6 @@ process, and need not be managed as separate service.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">zums</a><ul>
-<li><a class="reference internal" href="#using-zums-with-django-projects">Using zums with Django Projects</a></li>
-<li><a class="reference internal" href="#using-zums-with-non-django-projects">Using zums with non Django Projects</a></li>
-<li><a class="reference internal" href="#zumsd-zeromq-api">Zumsd ZeroMQ API</a></li>
-<li><a class="reference internal" href="#zumsd-extensions">Zumsd Extensions</a></li>
-</ul>
-</li>
-</ul>
-
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -165,7 +87,7 @@ process, and need not be managed as separate service.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="#">zums v0.1.3 documentation</a> &raquo;</li> 
+        <li><a href="#">zutils v0.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
